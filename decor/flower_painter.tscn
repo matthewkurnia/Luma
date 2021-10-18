@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://decor/flower_painter.gd" type="Script" id=1]
+[ext_resource path="res://decor/flower.tscn" type="PackedScene" id=2]
+
+[node name="FlowerPainter" type="Node2D"]
+script = ExtResource( 1 )
+flower_scene = ExtResource( 2 )
+color = [ Color( 0.0666667, 0.313726, 0.462745, 1 ), Color( 0.0745098, 0.372549, 0.501961, 1 ), Color( 0.0784314, 0.45098, 0.537255, 1 ) ]

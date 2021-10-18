@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://font/LondrinaSolid-Light.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://level/story_text.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 400, 200 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+extra_spacing_bottom = -6
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "pop_up"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 0.353553, 1 ),
+"update": 0,
+"values": [ Vector2( -500, -250 ), Vector2( -500, -300 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.835294, 0.313726, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="StoryText" type="Area2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 120 )
+shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -500.0
+margin_top = -300.0
+margin_right = 500.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 1000, 600 )
+rect_pivot_offset = Vector2( 500, 300 )
+custom_fonts/font = SubResource( 2 )
+text = "Lorem ipsum dolor sit amet.
+Suspendisse ac sagittis felis."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Label"]
+anims/pop_up = SubResource( 3 )
+[connection signal="body_entered" from="." to="." method="_on_story_text_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_story_text_body_exited"]

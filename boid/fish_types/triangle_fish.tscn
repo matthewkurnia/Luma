@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://boid/boid.tscn" type="PackedScene" id=1]
+[ext_resource path="res://boid/assets/triangle_fish.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 24.5
+
+[node name="Boid" instance=ExtResource( 1 )]
+initial_modulate = Color( 1, 1, 1, 1 )
+glow_modulate = Color( 1.5, 1.2, 2.3, 1 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource( 1 )
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 2 )
+offset = Vector2( 5, 0 )
+
+[node name="Eye" parent="Sprite" index="1"]
+offset = Vector2( 13.145, 0 )

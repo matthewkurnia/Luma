@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://level/painter/wall.gd" type="Script" id=1]
+[ext_resource path="res://level/assets/wall-3.png" type="Texture" id=2]
+[ext_resource path="res://level/assets/wall-1.png" type="Texture" id=3]
+[ext_resource path="res://level/assets/wall-2.png" type="Texture" id=4]
+
+[node name="Wall1" type="StaticBody2D"]
+modulate = Color( 0, 0, 0, 1 )
+rotation = 0.889981
+scale = Vector2( 0.521876, 0.521876 )
+z_index = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Sprite1" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 4 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )

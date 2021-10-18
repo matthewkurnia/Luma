@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://level/painter/wall_painter_decor.tscn" type="PackedScene" id=1]
+
+[node name="ParallaxWall" type="ParallaxBackground"]
+layer = 0
+follow_viewport_enable = true
+
+[node name="WallPainterDecor" parent="." instance=ExtResource( 1 )]
+nested_root = NodePath(".")

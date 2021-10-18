@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://font/LondrinaSolid-Light.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://level/obstacle_label.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+extra_spacing_bottom = -15
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "alert"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, -2, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1.2, 1.2 ), Vector2( 0.95, 0.95 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.4, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="ObstacleLabel" type="Label"]
+anchor_right = 1.0
+margin_left = -200.0
+margin_top = -150.0
+margin_right = 200.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 400, 300 )
+rect_scale = Vector2( 1e-05, 1e-05 )
+rect_pivot_offset = Vector2( 200, 150 )
+custom_fonts/font = SubResource( 1 )
+text = "Some things need more
+than strength alone."
+align = 1
+valign = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/alert = SubResource( 2 )

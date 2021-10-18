@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://boid/boid.tscn" type="PackedScene" id=1]
+[ext_resource path="res://boid/assets/round_fish.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 17.5
+
+[node name="Boid" groups=[
+"round",
+] instance=ExtResource( 1 )]
+initial_modulate = Color( 3, 1.2, 1.2, 1 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource( 1 )
+
+[node name="Sprite" parent="." index="2"]
+scale = Vector2( -1, 1 )
+texture = ExtResource( 2 )
+
+[node name="Eye" parent="Sprite" index="1"]
+scale = Vector2( -1, 1 )

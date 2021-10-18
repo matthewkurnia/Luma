@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/choir_3.ogg-c425c049937aa9d9e3c00e8e1ba12724.oggstr"
+
+[deps]
+
+source_file="res://audio/music/choir_3.ogg"
+dest_files=[ "res://.import/choir_3.ogg-c425c049937aa9d9e3c00e8e1ba12724.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

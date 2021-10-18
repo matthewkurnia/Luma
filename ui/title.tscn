@@ -1,0 +1,129 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://font/LondrinaSolid-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://font/LondrinaSolid-Light.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ui/title.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 170
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 22
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "anim"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Vector2( 0, 288 ), Vector2( 10, 288 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "start"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.117647, 0, 0.486275, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "anim"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.282353, 0, 0.427451, 0 ) ]
+}
+
+[node name="Title" type="CanvasLayer"]
+layer = 30
+script = ExtResource( 3 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -960.0
+margin_top = -540.0
+margin_right = -960.0
+margin_bottom = -540.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 109.0
+margin_top = 104.0
+margin_right = 1809.0
+margin_bottom = 974.0
+rect_min_size = Vector2( 1700, 870 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 1700.0
+margin_bottom = 202.0
+custom_fonts/font = SubResource( 1 )
+text = "Luma."
+
+[node name="Credit" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_top = 206.0
+margin_right = 1700.0
+margin_bottom = 284.0
+custom_fonts/font = SubResource( 2 )
+text = "Art, programming and sound by Matthew Kurnia
+Written by Alex Schweich
+Voice acted by Nicolo Gaggero"
+
+[node name="Instructions" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_top = 288.0
+margin_right = 1700.0
+margin_bottom = 345.0
+custom_fonts/font = SubResource( 3 )
+text = "
+Press any mouse button to start."
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/VBoxContainer/Instructions"]
+autoplay = "anim"
+anims/anim = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer"]
+anims/start = SubResource( 5 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+polygon = PoolVector2Array( -1677.79, -1098.97, 1707.36, -1189.74, 1707.36, 962.018, -1576.35, 1015.41 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Polygon2D"]
+autoplay = "anim"
+anims/anim = SubResource( 6 )

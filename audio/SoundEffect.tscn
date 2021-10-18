@@ -1,0 +1,4 @@
+[gd_scene format=2]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D"]
+bus = "ReverbSFX"

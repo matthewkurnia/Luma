@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://vfx/assets/bubble.png" type="Texture" id=1]
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.611651, 0.809091 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.318182 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0, 0.0629371, 0.447552, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 0.752941, 0.898039, 1, 0.552941, 1, 1, 1, 0.341176, 1, 1, 1, 0 )
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+modulate = Color( 1, 1, 1, 0.305882 )
+lifetime = 2.0
+local_coords = false
+texture = ExtResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 95.39
+gravity = Vector2( 0, -60 )
+scale_amount = 0.28
+scale_amount_random = 0.57
+scale_amount_curve = SubResource( 7 )
+color_ramp = SubResource( 6 )

@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://font/LondrinaSolid-Light.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://font/LondrinaSolid-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ui/pause_menu.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.211765, 0.407843, 0.592157, 0.576471 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.329412, 0.709804, 0.756863, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.360784, 0.372549, 0.760784, 0.298039 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 36
+font_data = ExtResource( 1 )
+
+[node name="PauseMenu" type="CanvasLayer"]
+pause_mode = 2
+layer = 50
+script = ExtResource( 3 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+modulate = Color( 1, 1, 1, 0.643137 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0705882, 0, 0.180392, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
+margin_left = 821.0
+margin_top = 416.0
+margin_right = 1099.0
+margin_bottom = 663.0
+custom_constants/separation = 20
+
+[node name="Label" type="Label" parent="Control/CenterContainer/VBoxContainer"]
+margin_right = 278.0
+margin_bottom = 119.0
+custom_fonts/font = SubResource( 1 )
+text = "Paused"
+align = 1
+valign = 1
+
+[node name="Continue" type="Button" parent="Control/CenterContainer/VBoxContainer"]
+margin_top = 139.0
+margin_right = 278.0
+margin_bottom = 183.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
+text = "Continue"
+
+[node name="Quit" type="Button" parent="Control/CenterContainer/VBoxContainer"]
+margin_top = 203.0
+margin_right = 278.0
+margin_bottom = 247.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
+text = "Quit"
+[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/Continue" to="." method="_on_Continue_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

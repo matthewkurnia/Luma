@@ -1,0 +1,347 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://vfx/assets/bgr.png" type="Texture" id=2]
+[ext_resource path="res://vfx/assets/bubble.png" type="Texture" id=3]
+[ext_resource path="res://player/assets/call.png" type="Texture" id=4]
+[ext_resource path="res://level/door.gd" type="Script" id=5]
+[ext_resource path="res://level/boid_collision.tscn" type="PackedScene" id=6]
+[ext_resource path="res://audio/SoundEffect.tscn" type="PackedScene" id=7]
+[ext_resource path="res://audio/sfx/door_open.wav" type="AudioStream" id=8]
+[ext_resource path="res://audio/sfx/sonar.wav" type="AudioStream" id=9]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 77.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 312, 120 )
+
+[sub_resource type="OccluderPolygon2D" id=3]
+polygon = PoolVector2Array( 1.94226, -537.724, 1914.44, -527.222, 1920.64, 523.273, 2.46753, 531.171 )
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+
+uniform float width = 0.3;
+uniform float gradient_ease = 5.0;
+uniform float fill_ratio : hint_range(0.0, 1.0);
+uniform vec4 color : hint_color;
+
+
+void fragment() {
+	float fill_angle = fill_ratio * 3.141592656 * 2.0;
+	vec2 uv = UV * 2.0 - 1.0;
+	if (atan(uv.x, uv.y) + 3.141592656 < fill_angle) {
+		float inner_width = 1.0 - width;
+		inner_width *= inner_width;
+		float d = uv.x * uv.x + uv.y * uv.y;
+		if (d != inner_width) {
+			float w = abs((1.0 + inner_width) / 2.0 - d) / (1.0 - inner_width);
+			w = 1.0 - pow(w + 0.5, gradient_ease);
+			COLOR = vec4(color.rgb, min(1.0, w));
+		} else {
+			COLOR.a = 0.0;
+		}
+	} else {
+		COLOR.a = 0.0;
+	}
+//	COLOR = vec4(0, 0, 0, 1);
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/width = 0.127
+shader_param/gradient_ease = 5.235
+shader_param/fill_ratio = 1.0
+shader_param/color = Color( 0.25098, 0.282353, 0.541176, 1 )
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+
+
+uniform float width = 0.3;
+uniform float gradient_ease = 5.0;
+uniform float fill_ratio : hint_range(0.0, 1.0);
+uniform vec4 color : hint_color;
+
+
+void fragment() {
+	float fill_angle = fill_ratio * 3.141592656 * 2.0;
+	vec2 uv = UV * 2.0 - 1.0;
+	if (atan(uv.x, uv.y) + 3.141592656 < fill_angle) {
+		float inner_width = 1.0 - width;
+		inner_width *= inner_width;
+		float d = uv.x * uv.x + uv.y * uv.y;
+		if (d != inner_width) {
+			float w = abs((1.0 + inner_width) / 2.0 - d) / (1.0 - inner_width);
+			w = 1.0 - pow(w + 0.5, gradient_ease);
+			COLOR = vec4(color.rgb, min(1.0, w));
+		} else {
+			COLOR.a = 0.0;
+		}
+	} else {
+		COLOR.a = 0.0;
+	}
+//	COLOR = vec4(0, 0, 0, 1);
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+shader_param/width = 0.369
+shader_param/gradient_ease = 17.638
+shader_param/fill_ratio = 0.812
+shader_param/color = Color( 0.47451, 0.552941, 0.917647, 1 )
+
+[sub_resource type="Animation" id=8]
+length = 2.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Call:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.85, 1.8 ),
+"transitions": PoolRealArray( 0.406126, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.3, 0.3 ), Vector2( 0.3, 0.3 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Call:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.65, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.552941 ), Color( 1, 1, 1, 0.552941 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("../CallSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 9 )
+} ],
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "open"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Door1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.9, 1.6 ),
+"transitions": PoolRealArray( -2.37841, 1 ),
+"update": 0,
+"values": [ Vector2( 0.323, 0.169 ), Vector2( 0, 0.169 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Door2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.9, 1.6 ),
+"transitions": PoolRealArray( -2.37841, 1 ),
+"update": 0,
+"values": [ Vector2( 0.323, 0.169 ), Vector2( 0, 0.169 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Circle:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.8, 1.1 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Bar:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.5, 0.8 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Color( 1, 1.5, 2, 1 ), Color( 1, 1.50196, 2, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite2:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.4, 0.9 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Color( 0.0509804, 0.0313726, 0.160784, 1 ), Color( 0.0509804, 0.0313726, 0.160784, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Call:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.6, 0.6 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Call:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1, 0.5, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/7/type = "audio"
+tracks/7/path = NodePath("../OpenSound")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 8 )
+} ],
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=10]
+length = 1.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:bar_fill")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -2.63902, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 310, 50 )
+
+[node name="Door" type="Area2D" groups=[
+"door",
+]]
+z_index = 1
+collision_layer = 524288
+collision_mask = 2148007936
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+light_mask = 0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 2 )
+
+[node name="Door1" type="Sprite" parent="StaticBody2D"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( -310, 0 )
+scale = Vector2( 0.322894, 0.169 )
+texture = ExtResource( 2 )
+offset = Vector2( 960, 0 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="StaticBody2D/Door1"]
+occluder = SubResource( 3 )
+
+[node name="Door2" type="Sprite" parent="StaticBody2D"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 310, 0 )
+rotation = 3.14159
+scale = Vector2( 0.322894, 0.169 )
+texture = ExtResource( 2 )
+offset = Vector2( 960, 0 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="StaticBody2D/Door2"]
+position = Vector2( 1920.13, 0.00930067 )
+rotation = -3.14159
+scale = Vector2( 1, 1 )
+occluder = SubResource( 3 )
+
+[node name="Sprite2" type="Sprite" parent="StaticBody2D"]
+modulate = Color( 0.0509804, 0.0313726, 0.160784, 0.997944 )
+light_mask = 0
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+
+[node name="Circle" type="Sprite" parent="StaticBody2D"]
+modulate = Color( 1, 1.50196, 2, 0.6 )
+self_modulate = Color( 1, 1, 1, 0.994288 )
+material = SubResource( 5 )
+scale = Vector2( 1.3, 1.3 )
+texture = ExtResource( 1 )
+
+[node name="Bar" type="Sprite" parent="StaticBody2D"]
+modulate = Color( 1, 1.50001, 2, 0.994288 )
+material = SubResource( 7 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 1 )
+
+[node name="Call" type="Sprite" parent="StaticBody2D"]
+modulate = Color( 1, 1, 1, 0 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StaticBody2D"]
+autoplay = "call"
+anims/call = SubResource( 8 )
+anims/open = SubResource( 9 )
+
+[node name="BarAnimation" type="AnimationPlayer" parent="StaticBody2D"]
+anims/show_bar = SubResource( 10 )
+
+[node name="BoidCollision" parent="." instance=ExtResource( 6 )]
+
+[node name="CollisionShape2D" parent="BoidCollision" index="0"]
+shape = SubResource( 11 )
+
+[node name="OpenSound" parent="." instance=ExtResource( 7 )]
+stream = ExtResource( 8 )
+
+[node name="CallSound" parent="." instance=ExtResource( 7 )]
+stream = ExtResource( 9 )
+volume_db = -9.563
+
+[editable path="BoidCollision"]

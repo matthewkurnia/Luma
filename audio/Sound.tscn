@@ -1,0 +1,136 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://audio/AmbientSound.tscn" type="PackedScene" id=1]
+[ext_resource path="res://audio/ambience/distant_bomb.ogg" type="AudioStream" id=2]
+[ext_resource path="res://audio/ambience/ocean_ambience_1.ogg" type="AudioStream" id=3]
+[ext_resource path="res://audio/ambience/whales_2.ogg" type="AudioStream" id=4]
+[ext_resource path="res://audio/ambience/ocean_ambience_2.ogg" type="AudioStream" id=5]
+[ext_resource path="res://audio/ambience/whales_3.ogg" type="AudioStream" id=6]
+[ext_resource path="res://audio/music.tscn" type="PackedScene" id=7]
+[ext_resource path="res://audio/music/pad_4.ogg" type="AudioStream" id=8]
+[ext_resource path="res://audio/music/base_chord.ogg" type="AudioStream" id=9]
+[ext_resource path="res://audio/music/bass.ogg" type="AudioStream" id=10]
+[ext_resource path="res://audio/music/pad_2.ogg" type="AudioStream" id=11]
+[ext_resource path="res://audio/music/arpeggio.ogg" type="AudioStream" id=12]
+[ext_resource path="res://audio/music/pad_1.ogg" type="AudioStream" id=13]
+[ext_resource path="res://audio/music/pad_3.ogg" type="AudioStream" id=14]
+[ext_resource path="res://audio/music/choir_3.ogg" type="AudioStream" id=15]
+[ext_resource path="res://audio/music/choir_4.ogg" type="AudioStream" id=16]
+[ext_resource path="res://audio/music/choir_1.ogg" type="AudioStream" id=17]
+[ext_resource path="res://audio/music/choir_2.ogg" type="AudioStream" id=18]
+[ext_resource path="res://audio/chords.gd" type="Script" id=19]
+[ext_resource path="res://audio/sound.gd" type="Script" id=20]
+[ext_resource path="res://audio/sfx/wood_destroy.wav" type="AudioStream" id=21]
+[ext_resource path="res://audio/music/arpeggio_4.ogg" type="AudioStream" id=22]
+[ext_resource path="res://audio/music/arpeggio_3.ogg" type="AudioStream" id=23]
+[ext_resource path="res://audio/music/arpeggio_1.ogg" type="AudioStream" id=24]
+[ext_resource path="res://audio/music/arpeggio_2.ogg" type="AudioStream" id=25]
+
+[node name="Sound" type="Node"]
+script = ExtResource( 20 )
+
+[node name="Ambience1" parent="." instance=ExtResource( 1 )]
+stream = ExtResource( 3 )
+volume_db = -5.049
+
+[node name="Ambience2" parent="." instance=ExtResource( 1 )]
+stream = ExtResource( 2 )
+volume_db = -5.049
+
+[node name="Ambience3" parent="." instance=ExtResource( 1 )]
+stream = ExtResource( 5 )
+volume_db = -8.078
+
+[node name="Ambience4" parent="." instance=ExtResource( 1 )]
+stream = ExtResource( 4 )
+volume_db = -22.214
+
+[node name="Ambience5" parent="." instance=ExtResource( 1 )]
+stream = ExtResource( 6 )
+volume_db = -21.204
+
+[node name="Music" type="Node" parent="."]
+
+[node name="BaseLayer" type="Node" parent="Music"]
+
+[node name="Bass" parent="Music/BaseLayer" instance=ExtResource( 7 )]
+stream = ExtResource( 10 )
+autoplay = true
+
+[node name="BaseChord" parent="Music/BaseLayer" instance=ExtResource( 7 )]
+stream = ExtResource( 9 )
+volume_db = -2.019
+autoplay = true
+
+[node name="BaseChord2" parent="Music/BaseLayer" instance=ExtResource( 7 )]
+stream = ExtResource( 12 )
+volume_db = -4.038
+
+[node name="Chords" type="Node" parent="Music"]
+script = ExtResource( 19 )
+
+[node name="Pad1" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 13 )
+bus = "Chord"
+
+[node name="Pad2" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 11 )
+volume_db = -5.049
+bus = "Chord"
+
+[node name="Pad3" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 14 )
+volume_db = -5.0
+bus = "Chord"
+
+[node name="Pad4" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 8 )
+volume_db = -5.0
+bus = "Chord"
+
+[node name="Choir1" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 17 )
+volume_db = 2.0
+bus = "Chord"
+
+[node name="Choir2" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 18 )
+volume_db = 2.0
+bus = "Chord"
+
+[node name="Choir3" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 15 )
+volume_db = 2.0
+bus = "Chord"
+
+[node name="Choir4" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 16 )
+volume_db = 2.0
+bus = "Chord"
+
+[node name="Arpeggio1" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 24 )
+volume_db = -80.0
+
+[node name="Arpeggio2" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 25 )
+volume_db = -80.0
+
+[node name="Arpeggio3" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 23 )
+volume_db = -80.0
+
+[node name="Arpeggio4" parent="Music/Chords" instance=ExtResource( 7 )]
+stream = ExtResource( 22 )
+volume_db = -80.0
+
+[node name="Timer" type="Timer" parent="Music/Chords"]
+wait_time = 8.0
+autostart = true
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="WoodDestroy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 21 )
+bus = "Ending"
+[connection signal="timeout" from="Music/Chords/Timer" to="Music/Chords" method="_on_timer_timeout"]

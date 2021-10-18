@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://level/painter/wall.tscn" type="PackedScene" id=1]
+[ext_resource path="res://level/painter/wall_painter.tscn" type="PackedScene" id=2]
+
+[node name="WallPainter" instance=ExtResource( 2 )]
+wall_asset = ExtResource( 1 )
+distance = 200.0

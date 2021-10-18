@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://level/assets/wall-3.png" type="Texture" id=1]
+[ext_resource path="res://level/assets/wall-1.png" type="Texture" id=2]
+[ext_resource path="res://level/assets/wall-2.png" type="Texture" id=3]
+[ext_resource path="res://level/painter/wall.gd" type="Script" id=4]
+[ext_resource path="res://level/boid_collision.tscn" type="PackedScene" id=5]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+polygon = PoolVector2Array( -158.427, -150.99, -110.404, -177.657, -43.809, -192.217, 8.30846, -169.573, 30.1126, -142.126, 33.5101, -114.909, 63.5458, -132.659, 102.669, -141.091, 156.028, -127.228, 175.669, -115.233, 181.655, -83.9621, 178.269, -54.4111, 205.644, -40.3777, 214.039, -25.8105, 215.253, 22.5527, 145.779, 178.321, 108.348, 226.45, 52.4339, 229.315, 0.309601, 182.433, -40.8586, 100.93, -67.8358, 150.536, -96.5903, 166.857, -124.622, 157.355, -153.92, 123.526, -173.14, 75.336, -166.958, 19.7596, -153.324, -5.70228, -185.947, -50.7687, -185.44, -103.175 )
+
+[sub_resource type="OccluderPolygon2D" id=2]
+polygon = PoolVector2Array( -90.0673, -30.8929, -147.143, -92.8177, -149.912, -142.139, -90.5033, -168.124, 8.06095, -160.648, 57.2616, -178.336, 114.006, -183.81, 163.349, -172.613, 197.94, -136.746, 212.217, -83.3342, 204.578, -27.6217, 172.85, 5.09068, 193.396, 53.9913, 189.068, 104.539, 167.574, 124.618, 127.633, 115.805, 121.858, 143.385, 88.1241, 175.344, 39.2025, 181.924, -13.2933, 149.864, -34.435, 164.125, -65.7262, 159.703, -144.017, 106.748, -185.573, 50.4195, -186.742, 16.3434, -175.202, -2.20808, -125.249, -21.9017 )
+
+[sub_resource type="OccluderPolygon2D" id=3]
+polygon = PoolVector2Array( -108.687, -66.0273, -126.253, -187.492, -107.496, -192.35, -54.5376, -114.58, -42.7609, -172.172, -18.5342, -189.165, -7.97928, -184.974, 3.93343, -108.194, 77.2822, -217.044, 98.0712, -225.488, 103.393, -161.021, 89.1733, -67.0472, 153.24, -76.1804, 166.301, -66.4729, 157.941, -31.3967, 116.084, -3.40116, 143.958, 110.719, 129.755, 149.781, 119.147, 154.266, 91.1198, 135.051, 20.8361, 52.8372, -36.1933, 174.906, -44.4689, 178.665, -58.2561, 166.625, -87.541, 75.7732, -190.385, 128.474, -205.952, 113.249, -225.046, 69.0128, -128.713, -9.01462, -147.612, -33.0412, -156.982, -58.0679, -133.761, -66.2855 )
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 210.0
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 145.5
+
+[node name="Wall1" type="StaticBody2D"]
+modulate = Color( 0, 0, 0, 1 )
+rotation = 0.889981
+scale = Vector2( 0.521876, 0.521876 )
+z_index = 10
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite1" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprite1"]
+occluder = SubResource( 1 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 3 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprite2"]
+occluder = SubResource( 2 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 1 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprite3"]
+occluder = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 4 )
+
+[node name="BoidCollision" parent="." instance=ExtResource( 5 )]
+
+[node name="CollisionShape2D" parent="BoidCollision" index="0"]
+shape = SubResource( 5 )
+
+[editable path="BoidCollision"]

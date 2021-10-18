@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/distant_bomb.ogg-935a28952079c31e282723f55c11fc8c.oggstr"
+
+[deps]
+
+source_file="res://audio/ambience/distant_bomb.ogg"
+dest_files=[ "res://.import/distant_bomb.ogg-935a28952079c31e282723f55c11fc8c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

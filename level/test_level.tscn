@@ -1,0 +1,290 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://level/painter/wall_painter_solid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/camera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://level/cage.tscn" type="PackedScene" id=4]
+[ext_resource path="res://boid/boid_spawner_round.tscn" type="PackedScene" id=5]
+[ext_resource path="res://level/painter/wall.tscn" type="PackedScene" id=6]
+[ext_resource path="res://level/painter/wall_decor.tscn" type="PackedScene" id=7]
+[ext_resource path="res://level/painter/wall_painter_decor.tscn" type="PackedScene" id=8]
+[ext_resource path="res://boid/boid_spawner_square.tscn" type="PackedScene" id=9]
+[ext_resource path="res://level/world_environment.tscn" type="PackedScene" id=10]
+[ext_resource path="res://level/rotten_wood.tscn" type="PackedScene" id=11]
+[ext_resource path="res://decor/coral_1.tscn" type="PackedScene" id=12]
+[ext_resource path="res://level/door.tscn" type="PackedScene" id=13]
+[ext_resource path="res://decor/flower_painter.tscn" type="PackedScene" id=14]
+[ext_resource path="res://level/story_text.tscn" type="PackedScene" id=15]
+[ext_resource path="res://decor/flower.tscn" type="PackedScene" id=16]
+[ext_resource path="res://level/end_wood.tscn" type="PackedScene" id=17]
+
+[sub_resource type="ShaderMaterial" id=1]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Area2D
+
+
+export var boid_needed := 1
+export var bar_fill := 0.0
+
+var fill_ratio := 0.0
+
+onready var animation_player = $StaticBody2D/AnimationPlayer
+onready var bar_anim = $StaticBody2D/BarAnimation
+onready var bar = $StaticBody2D/Bar
+
+
+func _ready():
+	pass # Replace with function body.
+
+
+func _process(delta):
+	bar.material.set_shader_param(\"fill_ratio\", bar_fill * fill_ratio)
+
+
+func activate(boid_count: int) -> void:
+	fill_ratio = float(boid_count)/float(boid_needed)
+	bar_anim.play(\"show_bar\")
+	yield(bar_anim, \"animation_finished\")
+	if fill_ratio >= 1.0:
+		animation_player.play(\"open\")
+		yield(animation_player, \"animation_finished\")
+		self.queue_free()
+	else:
+		bar_anim.play_backwards(\"show_bar\")
+"
+
+[sub_resource type="ShaderMaterial" id=3]
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends Area2D
+
+
+export var boid_needed := 1
+export var bar_fill := 0.0
+
+var fill_ratio := 0.0
+
+onready var animation_player = $StaticBody2D/AnimationPlayer
+onready var bar_anim = $StaticBody2D/BarAnimation
+onready var bar = $StaticBody2D/Bar
+
+
+func _ready():
+	pass # Replace with function body.
+
+
+func _process(delta):
+	bar.material.set_shader_param(\"fill_ratio\", bar_fill * fill_ratio)
+
+
+func activate(boid_count: int) -> void:
+	fill_ratio = float(boid_count)/float(boid_needed)
+	bar_anim.play(\"show_bar\")
+	yield(bar_anim, \"animation_finished\")
+	if fill_ratio >= 1.0:
+		animation_player.play(\"open\")
+		yield(animation_player, \"animation_finished\")
+		self.queue_free()
+	else:
+		bar_anim.play_backwards(\"show_bar\")
+"
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -10
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground"]
+color = Color( 0.0862745, 0.0117647, 0.152941, 1 )
+polygon = PoolVector2Array( -558.254, -179.82, 2767.94, -194.939, 2591.55, 1715.1, -522.976, 1458.08 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ParallaxBackground1" type="ParallaxBackground" parent="."]
+layer = -2
+follow_viewport_enable = true
+follow_viewport_scale = 0.9
+
+[node name="FlowerPainter" parent="ParallaxBackground1" instance=ExtResource( 14 )]
+z_index = 2
+root = NodePath("../..")
+
+[node name="Flower" parent="ParallaxBackground1/FlowerPainter" instance=ExtResource( 16 )]
+modulate = Color( 0.0745098, 0.372549, 0.501961, 1 )
+position = Vector2( 2481.64, 215.582 )
+
+[node name="Flower2" parent="ParallaxBackground1/FlowerPainter" instance=ExtResource( 16 )]
+modulate = Color( 0.0784314, 0.45098, 0.537255, 1 )
+position = Vector2( 2387.46, 234.082 )
+
+[node name="Flower3" parent="ParallaxBackground1/FlowerPainter" instance=ExtResource( 16 )]
+modulate = Color( 0.0745098, 0.372549, 0.501961, 1 )
+position = Vector2( 2417.73, 118.038 )
+
+[node name="Flower4" parent="ParallaxBackground1/FlowerPainter" instance=ExtResource( 16 )]
+modulate = Color( 0.0666667, 0.313726, 0.462745, 1 )
+position = Vector2( 2501.82, 343.399 )
+
+[node name="Flower5" parent="ParallaxBackground1/FlowerPainter" instance=ExtResource( 16 )]
+modulate = Color( 0.0745098, 0.372549, 0.501961, 1 )
+position = Vector2( 2550.59, 242.491 )
+
+[node name="Flower6" parent="ParallaxBackground1/FlowerPainter" instance=ExtResource( 16 )]
+modulate = Color( 0.0745098, 0.372549, 0.501961, 1 )
+position = Vector2( 2379.05, 345.08 )
+
+[node name="Flower7" parent="ParallaxBackground1/FlowerPainter" instance=ExtResource( 16 )]
+modulate = Color( 0.0745098, 0.372549, 0.501961, 1 )
+position = Vector2( 2453.05, 272.763 )
+
+[node name="WallNested" type="Node2D" parent="ParallaxBackground1"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Wall1" parent="ParallaxBackground1/WallNested" instance=ExtResource( 7 )]
+modulate = Color( 0.0509804, 0.266667, 0.396078, 1 )
+position = Vector2( 2199.25, 238.011 )
+rotation = 2.39082
+scale = Vector2( 1.77203, 1.77203 )
+
+[node name="WallPainterDecor" parent="ParallaxBackground1" instance=ExtResource( 8 )]
+root = NodePath("../..")
+nested_root = NodePath("../../ParallaxBackground1/WallNested")
+wall_color = Color( 0.0509804, 0.266667, 0.396078, 1 )
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+layer = -4
+follow_viewport_enable = true
+follow_viewport_scale = 0.82
+
+[node name="WallNested" type="Node2D" parent="ParallaxBackground2"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Wall1" parent="ParallaxBackground2/WallNested" instance=ExtResource( 7 )]
+modulate = Color( 0.0823529, 0.105882, 0.32549, 1 )
+position = Vector2( 2538.18, 394.47 )
+rotation = 0.0999008
+scale = Vector2( 1.84552, 1.84552 )
+
+[node name="WallPainterDecor" parent="ParallaxBackground2" instance=ExtResource( 8 )]
+root = NodePath("../..")
+nested_root = NodePath("../WallNested")
+wall_color = Color( 0.0823529, 0.105882, 0.32549, 1 )
+
+[node name="ParallaxBackground3" type="ParallaxBackground" parent="."]
+layer = -6
+follow_viewport_enable = true
+follow_viewport_scale = 0.73
+
+[node name="WallNested" type="Node2D" parent="ParallaxBackground3"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Wall1" parent="ParallaxBackground3/WallNested" instance=ExtResource( 7 )]
+modulate = Color( 0.0784314, 0.0352941, 0.239216, 1 )
+position = Vector2( 2511.99, 757.794 )
+rotation = 5.72011
+scale = Vector2( 1.16064, 1.16064 )
+
+[node name="WallPainterDecor" parent="ParallaxBackground3" instance=ExtResource( 8 )]
+root = NodePath("../..")
+nested_root = NodePath("../WallNested")
+wall_color = Color( 0.0784314, 0.0352941, 0.239216, 1 )
+
+[node name="WallPainter" parent="." instance=ExtResource( 2 )]
+root = NodePath("..")
+nested_root = NodePath("../WallNested")
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1138.77, -155.013 )
+
+[node name="Camera2D" parent="." instance=ExtResource( 3 )]
+player_path = NodePath("../Player")
+
+[node name="WallNested" type="Node2D" parent="."]
+
+[node name="Wall1" parent="WallNested" instance=ExtResource( 6 )]
+position = Vector2( 1785.4, 433.176 )
+rotation = 2.9643
+scale = Vector2( 1.38287, 1.38287 )
+n = 1
+
+[node name="Wall2" parent="WallNested" instance=ExtResource( 6 )]
+position = Vector2( 1980.35, 53.888 )
+rotation = 0.699841
+scale = Vector2( 1.82424, 1.82424 )
+n = 1
+
+[node name="Wall3" parent="WallNested" instance=ExtResource( 6 )]
+position = Vector2( 2840.63, 628.117 )
+rotation = 2.21414
+scale = Vector2( 1.77257, 1.77257 )
+n = 1
+
+[node name="Wall4" parent="WallNested" instance=ExtResource( 6 )]
+position = Vector2( 2257.92, 1015.88 )
+rotation = 2.34223
+scale = Vector2( 1.24093, 1.24093 )
+n = 2
+
+[node name="WorldEnvironment" parent="." instance=ExtResource( 10 )]
+
+[node name="BoidSpawnerRound" parent="." instance=ExtResource( 5 )]
+
+[node name="Cage" parent="BoidSpawnerRound" instance=ExtResource( 4 )]
+boid_needed = 10
+
+[node name="BoidSpawnerSquare" parent="." instance=ExtResource( 9 )]
+position = Vector2( 500, 500 )
+
+[node name="RottenWood" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1032.39, 847.492 )
+rotation = -0.762498
+scale = Vector2( 0.5, 0.5 )
+boid_needed = 10
+
+[node name="RottenWood2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 850.39, 967.492 )
+rotation = -0.419237
+scale = Vector2( 0.5, 0.5 )
+boid_needed = 10
+
+[node name="RottenWood3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 966.39, 1017.49 )
+rotation = -0.964393
+scale = Vector2( 0.5, 0.5 )
+boid_needed = 10
+
+[node name="Coral" parent="." instance=ExtResource( 12 )]
+position = Vector2( 1783.63, 820.145 )
+rotation = 3.21675
+
+[node name="Door" parent="." instance=ExtResource( 13 )]
+material = SubResource( 1 )
+position = Vector2( 1130.16, 322.904 )
+script = SubResource( 2 )
+
+[node name="Door2" parent="." instance=ExtResource( 13 )]
+material = SubResource( 3 )
+position = Vector2( 642.16, 678.904 )
+script = SubResource( 4 )
+
+[node name="StoryText" parent="." instance=ExtResource( 15 )]
+position = Vector2( 1696.19, 915.364 )
+
+[node name="EndWood" parent="." instance=ExtResource( 17 )]
+position = Vector2( 1133.2, -458.611 )
+
+[editable path="ParallaxBackground1/FlowerPainter"]
+
+[editable path="WallPainter"]
+
+[editable path="Door"]
+
+[editable path="Door2"]

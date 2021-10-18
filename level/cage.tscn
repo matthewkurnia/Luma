@@ -1,0 +1,169 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://level/assets/cage-1.png" type="Texture" id=1]
+[ext_resource path="res://level/cage.gd" type="Script" id=2]
+[ext_resource path="res://vfx/cage_fragment_2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://vfx/cage_fragment_1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://vfx/wood_fragment_1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://level/boid_collision.tscn" type="PackedScene" id=6]
+[ext_resource path="res://level/obstacle_label.tscn" type="PackedScene" id=7]
+[ext_resource path="res://audio/SoundEffect.tscn" type="PackedScene" id=8]
+[ext_resource path="res://audio/sfx/cage_thud.wav" type="AudioStream" id=9]
+[ext_resource path="res://audio/sfx/cage_destroy.wav" type="AudioStream" id=10]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 270, 270 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 300, 300 )
+
+[sub_resource type="OccluderPolygon2D" id=3]
+polygon = PoolVector2Array( -24.9904, -26.7179, 25.3454, -27.1633, 25.3454, 24.5088, -25.4359, 25.3997 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 170, 170 )
+
+[node name="Cage" type="StaticBody2D"]
+z_index = 1
+script = ExtResource( 2 )
+fragment_1 = ExtResource( 4 )
+fragment_2 = ExtResource( 3 )
+wood_fragment = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource( 2 )
+
+[node name="Occluders" type="Node2D" parent="."]
+
+[node name="Occluder1" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -173.222, -173.222 )
+occluder = SubResource( 3 )
+
+[node name="Occluder2" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 170.044, -168.984 )
+occluder = SubResource( 3 )
+
+[node name="Occluder3" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 178.233, 174.344 )
+occluder = SubResource( 3 )
+
+[node name="Occluder4" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -177.064, 176.234 )
+occluder = SubResource( 3 )
+
+[node name="Occluder5" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -86.1509, -166.773 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder6" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -31.3501, -165.712 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder7" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 25.572, -163.945 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder8" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 83.2012, -165.005 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder19" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -93.1509, 184.227 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder20" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -38.3501, 185.288 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder21" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 18.572, 187.055 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder22" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 76.2012, 185.995 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder9" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 171.847, -93.7321 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder10" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 174.074, -46.069 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder11" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 173.183, 5.60307 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder12" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 171.847, 52.8207 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder13" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( 170.956, 99.1474 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder14" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -175.343, -93.7321 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder15" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -173.116, -46.069 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder16" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -174.007, 5.60307 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder17" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -175.343, 52.8207 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="Occluder18" type="LightOccluder2D" parent="Occluders"]
+position = Vector2( -176.234, 99.1474 )
+scale = Vector2( 0.3, 0.3 )
+occluder = SubResource( 3 )
+
+[node name="BoidCollision" parent="." instance=ExtResource( 6 )]
+
+[node name="CollisionShape2D" parent="BoidCollision" index="0"]
+shape = SubResource( 4 )
+
+[node name="ObstacleLabel" parent="." instance=ExtResource( 7 )]
+
+[node name="ThudSound" parent="." instance=ExtResource( 8 )]
+stream = ExtResource( 9 )
+
+[node name="DestroySound" parent="." instance=ExtResource( 8 )]
+stream = ExtResource( 10 )
+volume_db = 5.103
+pitch_scale = 0.77
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
+
+[editable path="BoidCollision"]
